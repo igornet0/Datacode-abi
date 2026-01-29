@@ -5,7 +5,7 @@ edition = "2021"
 description = "Minimal C-compatible ABI contract between DataCode VM and native plugins"
 license = "MIT"
 authors = ["Igor <igornet0@users.noreply.github.com>"]
-repository = "https://github.com/igornet0/DataCode"
+repository = "https://github.com/igornet0/Datacode-abi.git"
 
 [lib]
 name = "datacode_abi"
