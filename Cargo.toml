@@ -1,0 +1,12 @@
+[package]
+name = "datacode_abi"
+version = "1.0.0"
+edition = "2021"
+description = "Minimal C-compatible ABI contract between DataCode VM and native plugins"
+license = "MIT"
+authors = ["Igor <igornet0@users.noreply.github.com>"]
+repository = "https://github.com/igornet0/DataCode"
+
+[lib]
+name = "datacode_abi"
+path = "src/lib.rs"
