@@ -20,4 +20,6 @@ pub enum Value {
     Array(*mut Value, usize),
     /// Opaque object (dict) handle.
     Object(NativeHandle),
+    /// Opaque plugin-owned object; `tag`/`id` semantics are defined only by the plugin (VM core is domain-neutral).
+    PluginOpaque { tag: u8, id: u64 },
 }
