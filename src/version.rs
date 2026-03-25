@@ -11,7 +11,8 @@ pub struct AbiVersion {
 /// Current datacode-abi version. Bump major on incompatible ABI changes.
 /// Minor 2+: root [`crate::module::AbiModuleDescriptor`], [`DATACODE_MODULE_ENTRY_SYMBOL`], class/global tables.
 /// Minor 3+: [`Value::PluginOpaque`] for opaque plugin handles (`tag` + `id`).
-pub const DATACODE_ABI_VERSION: AbiVersion = AbiVersion { major: 1, minor: 3 };
+/// Minor 4+: [`Value::Table`] for VM `Table` → native modules (headers + row-major cells).
+pub const DATACODE_ABI_VERSION: AbiVersion = AbiVersion { major: 1, minor: 4 };
 
 /// Compatible iff same major and module.minor <= vm.minor.
 #[inline]

@@ -22,6 +22,7 @@
 //!
 //! Natives use [`NativeAbiFn`]: `(ctx, args_ptr, argc) -> AbiValue` — heap-style argument buffer
 //! of [`AbiValue`] (see [`value`]); VM bridges to/from internal values via `abi_bridge`.
+//! ABI **1.4+** adds [`AbiValue::Table`](crate::AbiValue::Table) for VM `Table` → native modules (see [`version::DATACODE_ABI_VERSION`]).
 //!
 //! ## Descriptor vs `register` (ABI 1.1+)
 //!
