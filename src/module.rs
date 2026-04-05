@@ -45,9 +45,59 @@ pub struct AbiGlobalDescriptor {
     pub flags: u32,
 }
 
+/// Per-export metadata for **native** exports (functions + class methods, not globals). ABI **1.5+**.
+/// Parallel array: index `i` matches the `i`-th native export in descriptor order (functions, then class methods in order).
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct AbiNativeParamMeta {
+    /// Ordered UTF-8 parameter names; pointers valid for module lifetime.
+    pub param_names: *const *const c_char,
+    pub param_names_len: usize,
+    pub flags: u32,
+}
+
+pub const ABI_NATIVE_PARAM_META_SUPPORTS_NAMED_ARGS: u32 = 1;
+
+/// Optional UTF-8 export **names** for VM plugin hooks (not function pointers). Null = use VM default name.
+/// ABI **1.5+**; pointed to from [`AbiModuleDescriptor::plugin_hooks`].
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct AbiPluginHooksDescriptor {
+    pub native_plugin_call: *const c_char,
+    pub opaque_type_name: *const c_char,
+    pub opaque_display: *const c_char,
+    pub dataset_len: *const c_char,
+    pub opaque_binop: *const c_char,
+}
+
+/// Describes methods on a [`PluginOpaque`] `tag` (documentation / future dispatch). ABI **1.5+**.
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct AbiOpaqueTypeDescriptor {
+    pub type_tag: u8,
+    pub type_name: *const c_char,
+    pub methods: *const AbiExport,
+    pub methods_len: usize,
+}
+
+/// Root layout for [`AbiModuleDescriptor`] for modules **before** ABI 1.5 (minor &lt; 5). Do not read past `globals_len`.
+#[repr(C)]
+#[derive(Debug, Clone, Copy)]
+pub struct AbiModuleDescriptorV4 {
+    pub abi_version: AbiVersion,
+    pub name: *const c_char,
+    pub functions: *const AbiExport,
+    pub functions_len: usize,
+    pub classes: *const AbiClassDescriptor,
+    pub classes_len: usize,
+    pub globals: *const AbiGlobalDescriptor,
+    pub globals_len: usize,
+}
+
 /// Root module descriptor returned from [`DATACODE_MODULE_ENTRY_SYMBOL`] (production path).
 ///
 /// VM reads this **only** (no `register` callback). [`AbiVersion`] is checked before use.
+/// For `abi_version.minor >= 5`, trailing fields are valid; for older modules, read only as [`AbiModuleDescriptorV4`].
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]
 pub struct AbiModuleDescriptor {
@@ -60,6 +110,14 @@ pub struct AbiModuleDescriptor {
     pub classes_len: usize,
     pub globals: *const AbiGlobalDescriptor,
     pub globals_len: usize,
+    /// ABI 1.5+: parallel to native exports only (functions + class methods, same order as flattened); null or len 0 = none.
+    pub native_param_metas: *const AbiNativeParamMeta,
+    pub native_param_metas_len: usize,
+    /// ABI 1.5+: optional override table for export names used as plugin hooks.
+    pub plugin_hooks: *const AbiPluginHooksDescriptor,
+    /// ABI 1.5+: optional opaque-type tables (for documentation / tooling).
+    pub opaque_types: *const AbiOpaqueTypeDescriptor,
+    pub opaque_types_len: usize,
 }
 
 /// Layout for modules built against ABI **1.0** only (`abi_version.minor == 0`): three fields.
@@ -118,5 +176,6 @@ mod tests {
     #[test]
     fn module_descriptor_has_version_and_tables() {
         assert!(size_of::<AbiModuleDescriptor>() >= size_of::<AbiVersion>());
+        assert!(size_of::<AbiModuleDescriptor>() > size_of::<AbiModuleDescriptorV4>());
     }
 }

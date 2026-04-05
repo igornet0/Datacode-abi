@@ -31,4 +31,9 @@ pub enum Value {
         rows: usize,
         cols: usize,
     },
+    /// Raw bytes (e.g. `read_file_bin`); pointer valid for the duration of the native call.
+    Bytes {
+        ptr: *const u8,
+        len: usize,
+    },
 }

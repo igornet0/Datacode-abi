@@ -23,6 +23,7 @@
 //! Natives use [`NativeAbiFn`]: `(ctx, args_ptr, argc) -> AbiValue` — heap-style argument buffer
 //! of [`AbiValue`] (see [`value`]); VM bridges to/from internal values via `abi_bridge`.
 //! ABI **1.4+** adds [`AbiValue::Table`](crate::AbiValue::Table) for VM `Table` → native modules (see [`version::DATACODE_ABI_VERSION`]).
+//! ABI **1.6+** adds [`AbiValue::Bytes`](crate::AbiValue::Bytes) for dense binary buffers.
 //!
 //! ## Descriptor vs `register` (ABI 1.1+)
 //!
@@ -53,6 +54,8 @@ pub use error::DatacodeError;
 pub use vm_context::{VmContext, NativeAbiFn};
 pub use module::{
     AbiClassDescriptor, AbiExport, AbiExportTable, AbiGlobalDescriptor, AbiModuleDescriptor,
+    AbiModuleDescriptorV4, AbiNativeParamMeta, AbiOpaqueTypeDescriptor, AbiPluginHooksDescriptor,
+    ABI_NATIVE_PARAM_META_SUPPORTS_NAMED_ARGS,
     DatacodeModule, DatacodeModuleEntryFn, DatacodeModuleFn, DatacodeModuleLegacy,
     DATACODE_MODULE_ENTRY_SYMBOL, DATACODE_MODULE_SYMBOL,
 };
