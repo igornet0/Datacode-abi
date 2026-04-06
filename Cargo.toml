@@ -1,6 +1,6 @@
 [package]
 name = "datacode_abi"
-version = "1.1.0"
+version = "1.7.0"
 edition = "2021"
 description = "Minimal C-compatible ABI contract between DataCode VM and native plugins"
 license = "MIT"
@@ -10,3 +10,6 @@ repository = "https://github.com/igornet0/Datacode-abi.git"
 [lib]
 name = "datacode_abi"
 path = "src/lib.rs"
+
+[lints]
+workspace = true

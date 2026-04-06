@@ -14,7 +14,7 @@ pub struct AbiVersion {
 /// Minor 4+: [`Value::Table`] for VM `Table` → native modules (headers + row-major cells).
 /// Minor 5+: [`crate::module::AbiModuleDescriptor`] trailing fields — native param metadata, optional plugin hook names, opaque type tables.
 /// Minor 6+: [`Value::Bytes`] for dense byte buffers (`read_file_bin`) without per-byte [`Value::Array`] materialization.
-pub const DATACODE_ABI_VERSION: AbiVersion = AbiVersion { major: 1, minor: 6 };
+pub const DATACODE_ABI_VERSION: AbiVersion = AbiVersion { major: 1, minor: 7 };
 
 /// Compatible iff same major and module.minor <= vm.minor.
 #[inline]

@@ -21,7 +21,10 @@ pub enum Value {
     /// Opaque object (dict) handle.
     Object(NativeHandle),
     /// Opaque plugin-owned object; `tag`/`id` semantics are defined only by the plugin (VM core is domain-neutral).
-    PluginOpaque { tag: u8, id: u64 },
+    PluginOpaque {
+        tag: u8,
+        id: u64,
+    },
     /// Tabular data: `headers_len` column names (`Str`), then `rows * cols` cell values row-major.
     /// Pointers valid for the duration of the native call.
     Table {
