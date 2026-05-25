@@ -24,6 +24,8 @@
 //! of [`AbiValue`] (see [`value`]); VM bridges to/from internal values via `abi_bridge`.
 //! ABI **1.4+** adds [`AbiValue::Table`](crate::AbiValue::Table) for VM `Table` → native modules (see [`version::DATACODE_ABI_VERSION`]).
 //! ABI **1.6+** adds [`AbiValue::Bytes`](crate::AbiValue::Bytes) for dense binary buffers.
+//! ABI **1.8+** adds [`AbiValue::Date`](crate::AbiValue::Date) for wall-clock instants.
+//! ABI **1.9+** adds [`AbiValue::Duration`](crate::AbiValue::Duration) for signed time spans.
 //!
 //! ## Descriptor vs `register` (ABI 1.1+)
 //!

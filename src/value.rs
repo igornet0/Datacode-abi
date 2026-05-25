@@ -39,4 +39,15 @@ pub enum Value {
         ptr: *const u8,
         len: usize,
     },
+    /// Wall-clock instant: Unix seconds, subsecond nanoseconds, and UTC offset in seconds (east positive).
+    Date {
+        secs: i64,
+        nanos: u32,
+        offset_secs: i32,
+    },
+    /// Signed span: whole seconds + subsecond nanoseconds (see chrono::Duration).
+    Duration {
+        secs: i64,
+        nanos: i32,
+    },
 }
